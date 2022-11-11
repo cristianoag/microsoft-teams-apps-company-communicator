@@ -103,8 +103,11 @@ namespace Microsoft.Teams.Apps.CompanyCommunicator.Bot
                 {
                     // the bot is sending a message to users
                     // save the reaction added to the database
-                    sentNotificationDataEntity.Reactions = reaction.Type;
-                    await this.sentNotificationDataRepository.InsertOrMergeAsync(sentNotificationDataEntity);
+                    if (sentNotificationDataEntity != null)
+                    {
+                        sentNotificationDataEntity.Reactions = reaction.Type;
+                        await this.sentNotificationDataRepository.InsertOrMergeAsync(sentNotificationDataEntity);
+                    }
 
                     // the code below can be used if you want to send a reply message back to the channel 
                     // string newReaction = $"You reacted with '{reaction.Type}' to the following message: '{notificationId}' in the conversation ID: '{turnContext.Activity.Conversation.Id}'. This is a 1:1 message!'";
